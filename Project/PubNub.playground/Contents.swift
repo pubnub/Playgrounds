@@ -17,23 +17,31 @@ XCPlaygroundPage.currentPage.needsIndefiniteExecution = true
  
  ## Configuring a PubNub client
  
- In order to use the PubNub features, you must create a PubNub instance property. Open your `AppDelegate.swift` file and add this before the class declaration:
+ The first step to using PubNub is importing the framework:
+ */
+import PubNub
+
+/*:
+ In order to use PubNub features, you must create a PubNub client instance.
+ In this step, replace the keys passed into the `PNConfiguration` constructor with your own respective publish and subscribe keys.
  */
 
-import PubNub
+let config = PNConfiguration(publishKey: "pub-c-63c972fb-df4e-47f7-82da-e659e28f7cb7", subscribeKey: "sub-c-28786a2e-31a3-11e6-be83-0619f8945a4f")
+let exampleClient = PubNub.clientWithConfiguration(config)
+
 /*:
- We will then create the PubNub instance, replace the keys passed into `PNConfiguration()` with your own respective publish and subscribe keys.
+ Typically this goes in AppDelegate.swift. Here is an example:
  */
+
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
-  var window: UIWindow?
-  lazy var client: PubNub = {
+    var window: UIWindow?
+    lazy var client: PubNub = {
         let config = PNConfiguration(publishKey: "pub-c-63c972fb-df4e-47f7-82da-e659e28f7cb7", subscribeKey: "sub-c-28786a2e-31a3-11e6-be83-0619f8945a4f")
         let pub = PubNub.clientWithConfiguration(config)
         return pub
     }()
 }
-
 
 /*:
  > **Note:**
