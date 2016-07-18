@@ -59,47 +59,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
  > **Note:**
  The client variable is declared inside of the example classes below just so the PubNub methods can be demonstrated in the playground. It is still recommended as shown above, to declare it in the `AppDelegate` and access the client variable through the `AppDelegate` when you need it in other classes.
 */
- 
-/*:
- ## Listen
- 
- In order to receive messages from a channel, you must declare your current instance as a listener. Below, the `ListenViewController` class becomes a listener using the `addListener()` method in the `viewDidLoad()` by passing in `self`.
- > **Note:**
- Make sure to add the `PNObjectEventListener` protocol in your class declaration.
- */
-
-import PubNub
-
-class ListenViewController: UIViewController, PNObjectEventListener {
-    lazy var client: PubNub = {
-        let config = PNConfiguration(publishKey: "pub-c-63c972fb-df4e-47f7-82da-e659e28f7cb7", subscribeKey: "sub-c-28786a2e-31a3-11e6-be83-0619f8945a4f")
-        let pub = PubNub.clientWithConfiguration(config)
-        return pub
-    }()
-    override func viewDidLoad() {
-        client.addListener(self)
-    }
-}
-
-/*:
- ## Subscribe
- 
- Let's go ahead and use the `subscribe()` function next. This function causes the client to create an open TCP socket to the PubNub Real-Time Network and begin listening for messages on a specified channel. To subscribe to a channel the client must send the appropriate subscribeKey at initialization.
- By default a newly subscribed client will only receive messages published to the channel after the `subscribeToChannels()` call completes. Include the code in the `viewDidLoad()` function to subscribe to a channel.
- */
-
-import PubNub
-
-class ListenSubViewController: UIViewController {
-    var client: PubNub = {
-        let config = PNConfiguration(publishKey: "pub-c-63c972fb-df4e-47f7-82da-e659e28f7cb7", subscribeKey: "sub-c-28786a2e-31a3-11e6-be83-0619f8945a4f")
-        let pub = PubNub.clientWithConfiguration(config)
-        return pub
-    }()
-    override func viewDidLoad() {
-        client.subscribeToChannels(["my_channel"], withPresence: false)
-    }
-}
 
 /*:
  ## Publish
@@ -143,15 +102,31 @@ class PubNubPublisher: NSObject {
 }
 
 let publisher = PubNubPublisher(publishChannel: "PlaygroundChannel")
-publisher.publish("Hi from the PubNub Swift SDK!")
+publisher.publish("Hello from the PubNub Swift SDK!")
 /*:
  Once a `PublishObject` instance is created, the client will publish a message to 'my_channel' and you can see in the playground whether the message successfully went through or failed with the print statement that is executed.
  */
 
 /*:
- ## Receiving messages
+ ## Subscribe & Listen
  
-Once you declare your current instance as a listener and are subscribed to a channel, you can receive messages with the `client(_:didReceiveMessage:)` PubNub callback function. Below we publish the message: "Hello from the PubNub Swift SDK to "my_channel". If the message successfully went through, you're able to see that same message from the `print()` statement in the `client(_:didReceiveMessage:)` function.
+ ###Subscribe
+ 
+ Let's go ahead and use the `subscribe()` function next. This function causes the client to create an open TCP socket to the PubNub Real-Time Network and begin listening for messages on a specified channel. To subscribe to a channel the client must send the appropriate subscribeKey at initialization.
+ */
+
+/*:
+ ### Listen
+ 
+ In order to receive messages from a channel, you must declare your current instance as a listener. Below, the `PubNubSubscriber` class becomes a listener using the `addListener()` method in the initializer by passing in `self`.
+ > **Note:**
+ Make sure to add the `PNObjectEventListener` protocol in your class declaration.
+ */
+
+/*:
+ ### Receiving messages
+ 
+Once you declare your current instance as a listener and are subscribed to a channel, you can receive messages with the `client(_:didReceiveMessage:)` PubNub callback function. Below we publish the message: "Hello from the PubNub Swift SDK!" to "PlaygroundChannel". If the message successfully went through, you're able to see that same message from the `print()` statement in the `client(_:didReceiveMessage:)` function.
  */
 
 class PubNubSubscriber: PubNubPublisher, PNObjectEventListener {
