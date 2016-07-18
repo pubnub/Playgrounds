@@ -27,6 +27,7 @@ import PubNub
  */
 
 let config = PNConfiguration(publishKey: "pub-c-63c972fb-df4e-47f7-82da-e659e28f7cb7", subscribeKey: "sub-c-28786a2e-31a3-11e6-be83-0619f8945a4f")
+print("publish key: \(config.publishKey) and subscribe key: \(config.subscribeKey)")
 let exampleClient = PubNub.clientWithConfiguration(config)
 
 /*:
