@@ -89,7 +89,7 @@ class ListenSubViewController: UIViewController {
 
 import PubNub
 
-class PublishObject: NSObject {
+class PubNubPublisher: NSObject {
     let client: PubNub
     let publishChannel: String
     
@@ -125,8 +125,8 @@ class PublishObject: NSObject {
     }
 }
 
-let publishObject = PublishObject(publishChannel: "PlaygroundChannel")
-publishObject.publish("Hi from the PubNub Swift SDK!")
+let publisher = PubNubPublisher(publishChannel: "PlaygroundChannel")
+publisher.publish("Hi from the PubNub Swift SDK!")
 /*:
  Once a `PublishObject` instance is created, the client will publish a message to 'my_channel' and you can see in the playground whether the message successfully went through or failed with the print statement that is executed.
  */
@@ -137,11 +137,11 @@ publishObject.publish("Hi from the PubNub Swift SDK!")
 Once you declare your current instance as a listener and are subscribed to a channel, you can receive messages with the `client(_:didReceiveMessage:)` PubNub callback function. Below we publish the message: "Hello from the PubNub Swift SDK to "my_channel". If the message successfully went through, you're able to see that same message from the `print()` statement in the `client(_:didReceiveMessage:)` function.
  */
 
-class PubNubCallbackDemoObject: PublishObject, PNObjectEventListener {
+class PubNubSubscriber: PubNubPublisher, PNObjectEventListener {
     
     required init(publishChannel: String) {
         super.init(publishChannel: publishChannel)
-        // add subscribe functionality during phase two of initialization
+        // add subscription during phase two of initialization
         client.addListener(self)
         client.subscribeToChannels([self.publishChannel], withPresence: false)
     }
@@ -160,7 +160,13 @@ class PubNubCallbackDemoObject: PublishObject, PNObjectEventListener {
             // message.data.subscribedChannel
         }
         
-        print("Received message: \(message.data.message) on channel " +
+        // carefully unwrap message payload, it is an optional
+        guard let receivedMessage = message.data.message else {
+            print("No message payload received")
+            return
+        }
+        
+        print("Received message: \(receivedMessage) on channel " +
             "\((message.data.actualChannel ?? message.data.subscribedChannel)!) at " +
             "\(message.data.timetoken)")
         
@@ -169,8 +175,8 @@ class PubNubCallbackDemoObject: PublishObject, PNObjectEventListener {
     }
 }
 
-let pubNubCallbackDemoObject = PubNubCallbackDemoObject(publishChannel: "PlaygroundChannel")
-pubNubCallbackDemoObject.publish("Hi again from the PubNub Swift SDK")
+let subscriber = PubNubSubscriber(publishChannel: "PlaygroundChannel")
+subscriber.publish("Hi again from the PubNub Swift SDK")
 
 /*:
  
