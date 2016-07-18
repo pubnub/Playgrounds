@@ -90,19 +90,28 @@ class ListenSubViewController: UIViewController {
 import PubNub
 
 class PublishObject: NSObject {
-    var client: PubNub = {
-        let config = PNConfiguration(publishKey: "pub-c-63c972fb-df4e-47f7-82da-e659e28f7cb7", subscribeKey: "sub-c-28786a2e-31a3-11e6-be83-0619f8945a4f")
-        let pub = PubNub.clientWithConfiguration(config)
-        return pub
-    }()
+    let client: PubNub
+    let publishChannel: String
     
-    override init() {
+    required init(publishChannel: String) {
+        let config = PNConfiguration(publishKey: "pub-c-63c972fb-df4e-47f7-82da-e659e28f7cb7", subscribeKey: "sub-c-28786a2e-31a3-11e6-be83-0619f8945a4f")
+        // set client before the first phase of initialization ends
+        self.client = PubNub.clientWithConfiguration(config)
+        self.publishChannel = publishChannel
         super.init()
-        client.publish("Hello from the PubNub Swift SDK cody has a big butt haha", toChannel: "my_channel",
-                       compressed: false, withCompletion: { (status) -> Void in
+        // now set up the client during phase two of initialization
+        print("self.client: \(client) with pubKey: \(client.currentConfiguration().publishKey) and subKey: \(client.currentConfiguration().subscribeKey)")
+    }
+    
+    func publish(message: String?) {
+        guard let publishString = message else {
+            print("Nothing to publish")
+            return
+        }
+        client.publish(publishString, toChannel: self.publishChannel, withCompletion: { (status) -> Void in
                         if status.error {
                             // Error publishing message to specified channel.
-                            print("Error")
+                            print("Error publishing message: \(publishString)")
                         } else {
                             // Handle message publish error. Check 'category' property
                             // to find out possible reason because of which request did fail.
@@ -110,13 +119,14 @@ class PublishObject: NSObject {
                             // object to get additional information about issue.
                             //
                             // Request can be resent using: status.retry()
-                            print("Success")
+                            print("Successful publish of message: \(publishString)")
                         }
         })
     }
 }
 
-let publishObject = PublishObject()
+let publishObject = PublishObject(publishChannel: "PlaygroundChannel")
+publishObject.publish("Hi from the PubNub Swift SDK!")
 /*:
  Once a `PublishObject` instance is created, the client will publish a message to 'my_channel' and you can see in the playground whether the message successfully went through or failed with the print statement that is executed.
  */
@@ -127,32 +137,13 @@ let publishObject = PublishObject()
 Once you declare your current instance as a listener and are subscribed to a channel, you can receive messages with the `client(_:didReceiveMessage:)` PubNub callback function. Below we publish the message: "Hello from the PubNub Swift SDK to "my_channel". If the message successfully went through, you're able to see that same message from the `print()` statement in the `client(_:didReceiveMessage:)` function.
  */
 
-class PubNubCallbackDemoObject: NSObject, PNObjectEventListener {
-    var client: PubNub = {
-        let config = PNConfiguration(publishKey: "pub-c-63c972fb-df4e-47f7-82da-e659e28f7cb7", subscribeKey: "sub-c-28786a2e-31a3-11e6-be83-0619f8945a4f")
-        let pub = PubNub.clientWithConfiguration(config)
-        return pub
-    }()
+class PubNubCallbackDemoObject: PublishObject, PNObjectEventListener {
     
-    override init() {
-        super.init()
+    required init(publishChannel: String) {
+        super.init(publishChannel: publishChannel)
+        // add subscribe functionality during phase two of initialization
         client.addListener(self)
-        client.subscribeToChannels(["my_channel"], withPresence: false)
-        client.publish("Hello from the PubNub Swift SDK", toChannel: "my_channel",
-                       compressed: false, withCompletion: { (status) -> Void in
-                        if status.error {
-                            // Error publishing message to specified channel.
-                            print("Error")
-                        } else {
-                            // Handle message publish error. Check 'category' property
-                            // to find out possible reason because of which request did fail.
-                            // Review 'errorData' property (which has PNErrorData data type) of status
-                            // object to get additional information about issue.
-                            //
-                            // Request can be resent using: status.retry()
-                            print("Success")
-                        }
-        })
+        client.subscribeToChannels([self.publishChannel], withPresence: false)
     }
     
     // Handle new message from one of channels on which client has been subscribed.
@@ -178,7 +169,8 @@ class PubNubCallbackDemoObject: NSObject, PNObjectEventListener {
     }
 }
 
-let pubNubCallbackDemoObject = PubNubCallbackDemoObject()
+let pubNubCallbackDemoObject = PubNubCallbackDemoObject(publishChannel: "PlaygroundChannel")
+pubNubCallbackDemoObject.publish("Hi again from the PubNub Swift SDK")
 
 /*:
  
