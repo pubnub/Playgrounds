@@ -96,12 +96,9 @@ class PubNubPublisher: NSObject {
                 // Request can be resent using: status.retry()
                 print("Error publishing message: \(publishString)")
             } else {
-                // Handle message publish error. Check 'category' property
-                // to find out possible reason because of which request did fail.
-                // Review 'errorData' property (which has PNErrorData data type) of status
-                // object to get additional information about issue.
-                //
-                // Request can be resent using: status.retry()
+                // Statuses without errors mean the message was successfully
+                // published. This means you should also see the same message
+                // in the PubNub debug console
                 print("Successful publish of message: \(publishString)")
             }
         }
