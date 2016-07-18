@@ -30,6 +30,17 @@ let config = PNConfiguration(publishKey: "pub-c-63c972fb-df4e-47f7-82da-e659e28f
 print("publish key: \(config.publishKey) and subscribe key: \(config.subscribeKey)")
 let exampleClient = PubNub.clientWithConfiguration(config)
 
+// now let's
+
+// now let's make a func to create pubnub client instances
+func createPubNubClientInstance(publishKey: String!, subscribeKey: String!) -> PubNub {
+    let createdConfig = PNConfiguration(publishKey: "pub-c-63c972fb-df4e-47f7-82da-e659e28f7cb7", subscribeKey: "sub-c-28786a2e-31a3-11e6-be83-0619f8945a4f")
+    return PubNub.clientWithConfiguration(createdConfig)
+}
+
+// show it works
+print(createPubNubClientInstance("demo", subscribeKey: "demo"))
+
 /*:
  Typically this goes in AppDelegate.swift. Here is an example:
  */
@@ -103,13 +114,10 @@ class PubNubPublisher: NSObject {
     let publishChannel: String
     
     required init(publishChannel: String) {
-        let config = PNConfiguration(publishKey: "pub-c-63c972fb-df4e-47f7-82da-e659e28f7cb7", subscribeKey: "sub-c-28786a2e-31a3-11e6-be83-0619f8945a4f")
         // set client before the first phase of initialization ends
-        self.client = PubNub.clientWithConfiguration(config)
+        self.client = createPubNubClientInstance("pub-c-63c972fb-df4e-47f7-82da-e659e28f7cb7", subscribeKey: "sub-c-28786a2e-31a3-11e6-be83-0619f8945a4f")
         self.publishChannel = publishChannel
         super.init()
-        // now set up the client during phase two of initialization
-        print("self.client: \(client) with pubKey: \(client.currentConfiguration().publishKey) and subKey: \(client.currentConfiguration().subscribeKey)")
     }
     
     func publish(message: String?) {
@@ -185,7 +193,6 @@ class PubNubSubscriber: PubNubPublisher, PNObjectEventListener {
 }
 
 let subscriber = PubNubSubscriber(publishChannel: "PlaygroundChannel")
-subscriber.publish("Hi again from the PubNub Swift SDK")
 
 /*:
  
