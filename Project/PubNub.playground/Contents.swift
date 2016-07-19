@@ -5,17 +5,15 @@ XCPlaygroundPage.currentPage.needsIndefiniteExecution = true
  # Getting Started with Swift and PubNub
  
  In this playground, you will run through the basics of utilizing the PubNub Swift SDK in your iOS project. You will learn about:
- - Configuring a PubNub client
- - Listening to a PubNub channel
- - Subscribing to a PubNub channel
+ - Configuring and initializing a PubNub client
  - Publishing to a PubNub channel
- - Receiving messages
+ - Using a PubNub client to Subscribe & Receive Messages
  
  With these skills you'll be able to incorporate realtime functionality into your iOS applications.
  
  ---
  
- ## Configuring a PubNub client
+ ## Configuring and initializing a PubNub client
  
  The first step to using PubNub is importing the framework:
  */
@@ -25,6 +23,7 @@ import PubNub
  In this step, replace the keys passed into the `PNConfiguration` constructor with your own respective publish and subscribe keys.
  */
 let config = PNConfiguration(publishKey: "pub-c-63c972fb-df4e-47f7-82da-e659e28f7cb7", subscribeKey: "sub-c-28786a2e-31a3-11e6-be83-0619f8945a4f")
+// at this point you can customize your `PNConfiguration` object as needed
 print("publish key: \(config.publishKey) and subscribe key: \(config.subscribeKey)")
 let exampleClient = PubNub.clientWithConfiguration(config)
 /*:
@@ -56,7 +55,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.client = PubNub.clientWithConfiguration(config)
         // now delegate to super initialization to end phase 1 of initialization
         super.init()
-        // perform any custom initialization in phase 2 (such as adding the `self` as a listener to `client`
+        // perform any custom initialization in phase 2 (such as adding the `self` as a listener to `client`)
     }
 }
 
@@ -64,7 +63,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
  > **Note:**
  The client variable is declared inside of the example classes below just so the PubNub methods can be demonstrated in the playground. It is still recommended as shown above, to declare it in the `AppDelegate` and access the client variable through the `AppDelegate` when you need it in other classes.
 
- ## Publish
+ ## Publishing to a PubNub channel
  
  You can publish to a channel with the `publish()` function. To publish a message you must first specify a valid publishKey at initialization. A successfully published message is replicated across the PubNub Real-Time Network and sent simultaneously to all subscribed clients on the published channel. This playground will publish in real time on PubNub, so feel free to see the results on the [PubNub Debug Console](https://www.pubnub.com/console/); make sure to enter your publish key and subscribe key into the console before clicking the "Subscribe" button.
  */
@@ -108,9 +107,9 @@ class PubNubPublisher: NSObject {
 let publisher = PubNubPublisher(publishChannel: "PlaygroundChannel")
 publisher.publish("Hello from the PubNub Swift SDK!")
 /*:
- Once a `PublishObject` instance is created, the client will publish a message to 'PlaygroundChannel' and you can see in the playground and the debug console whether the message successfully went through or failed with the print statement that is executed.
+ Once a `PubNubPublisher` instance is created, the client will publish a message to 'PlaygroundChannel' and you can see in the playground and the debug console whether the message successfully went through or failed with the print statement that is executed.
 
- ## Subscribe & Receive Messages
+ ## Using a PubNub client to Subscribe & Receive Messages
  
  The next step is learning how to subscribe to channels and receive messages published on those channels (including messages you published yourself).
 
