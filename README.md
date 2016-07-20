@@ -4,6 +4,8 @@ This project uses Playgrounds to show the features of the [PubNub Swift SDK](htt
 In order to use this Playground, you must follow these instructions:
 
 1. You must first run `pod install` from the root directory of the repository 
-2. Open `PubNub.xcworkspace` in Xcode
-3. Build the target `PubNubPlayground` by clicking the play button next to the target in the upper left of Xcode
-4. Now select `PubNub.playground` and prepare to be amazed!
+2. Open `PubNub.xcworkspace` from root directory in Xcode
+3. Verify the `PubNubPlayground` target is selected: ![Image of PubNubPlayground Target](https://raw.githubusercontent.com/pubnub/Playgrounds/assets/pubnubplaygroundtarget.png)
+4. Select the `PubNubPlayground` target if need be: ![Image of Selecting PubNubPlayground Target](https://raw.githubusercontent.com/pubnub/Playgrounds/assets/selecttarget.png)
+5. Build the target `PubNubPlayground` by clicking the play button next to the target in the upper left of Xcode: ![Image of Build Target Button in Xcode](https://raw.githubusercontent.com/pubnub/Playgrounds/assets/buildtarget.png)
+4. Now select `PubNub.playground` and prepare to be amazed! ![Image of PubNub.playground](https://raw.githubusercontent.com/pubnub/Playgrounds/assets/selectplayground.png)
