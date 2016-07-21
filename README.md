@@ -1,5 +1,5 @@
 # Playgrounds
-This project uses Playgrounds to show the features of the [PubNub Swift SDK](https://www.pubnub.com/docs/swift/) with Apple's Playgrounds, such as their [Learn the Essentials of Swift Playground](https://developer.apple.com/library/ios/referencelibrary/GettingStarted/DevelopiOSAppsSwift/Lesson1.html#//apple_ref/doc/uid/TP40015214-CH3-SW1)
+This project uses Playgrounds to show the features of the [PubNub Swift SDK](https://www.pubnub.com/docs/swift/pubnub-swift-sdk) with Apple's Playgrounds, such as their [Learn the Essentials of Swift Playground](https://developer.apple.com/library/ios/referencelibrary/GettingStarted/DevelopiOSAppsSwift/Lesson1.html#//apple_ref/doc/uid/TP40015214-CH3-SW1)
 
 In order to use this Playground, you must follow these instructions:
 
