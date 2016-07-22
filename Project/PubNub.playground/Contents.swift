@@ -4,7 +4,7 @@ XCPlaygroundPage.currentPage.needsIndefiniteExecution = true
 /*:
  # Getting Started with Swift and PubNub
  
- In this playground, you will run through the basics of utilizing the PubNub Swift SDK in your iOS project. You will learn about:
+ In this playground, you will run through the basics of utilizing the [PubNub Swift SDK](https://www.pubnub.com/docs/swift/pubnub-swift-sdk/) in your iOS project. You will learn about:
  - Configuring and initializing a PubNub client
  - Publishing to a PubNub channel
  - Using a PubNub client to Subscribe & Receive Messages
@@ -169,5 +169,5 @@ let subscriber = PubNubSubscriber(publishChannel: "PlaygroundChannel")
  
 # Conclusion
  
-Those are the basics to get you up and running with the PubNub Swift SDK. Check out the [PubNub Swift API reference guide](https://www.pubnub.com/docs/swift/api-reference#subscribe).
+Those are the basics to get you up and running with the PubNub Swift SDK. Check out the [PubNub Swift API reference guide](https://www.pubnub.com/docs/swift/api-reference).
  */
