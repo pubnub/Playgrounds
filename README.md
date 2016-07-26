@@ -1,9 +1,17 @@
 # Playgrounds
 This project uses Playgrounds to show the features of the [PubNub Swift SDK](https://www.pubnub.com/docs/swift/pubnub-swift-sdk) with Apple's Playgrounds, such as their [Learn the Essentials of Swift Playground](https://developer.apple.com/library/ios/referencelibrary/GettingStarted/DevelopiOSAppsSwift/Lesson1.html#//apple_ref/doc/uid/TP40015214-CH3-SW1)
 
-In order to use this Playground, you must follow these instructions:
+## Prerequisites
 
-1. You must first run `pod install` from the root directory of the repository 
+* OS X 10.11
+* [Xcode 7.3](https://itunes.apple.com/us/app/xcode/id497799835?mt=12)
+* [Cocoapods 1.0](https://cocoapods.org/)
+
+## Set Up Instructions
+
+In order to use this Playground, you must follow these steps:
+
+1. Run `pod install` from the root directory of the repository (optionally run `pod repo update` first if you haven't run that in a long a time or didn't just install Cocoapods)
 2. Open `PubNub.xcworkspace` from root directory in Xcode
 3. Verify the `PubNubPlayground` target is selected: ![Image of PubNubPlayground Target](https://raw.githubusercontent.com/pubnub/Playgrounds/assets/pubnubplaygroundtarget.png)
 4. Select the `PubNubPlayground` target if need be: ![Image of Selecting PubNubPlayground Target](https://raw.githubusercontent.com/pubnub/Playgrounds/assets/selecttarget.png)
