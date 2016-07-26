@@ -13,11 +13,11 @@
 
 /* Begin PBXFileReference section */
 		00DBEBC73EEC28D1DCF7DB13 /* PubNub.playground */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = file.playground; path = PubNub.playground; sourceTree = "<group>"; };
+		18278EB9B63E12341B84B4ED /* Pods-PubNubPlayground.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PubNubPlayground.release.xcconfig"; path = "../Pods/Target Support Files/Pods-PubNubPlayground/Pods-PubNubPlayground.release.xcconfig"; sourceTree = "<group>"; };
 		2D64CB6E6C2058FAA546FA51 /* PubNubPlayground.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = PubNubPlayground.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		A54D3CFEB51352CA94380AF6 /* Pods-PubNubPlayground.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PubNubPlayground.release.xcconfig"; path = "../Pods/Target Support Files/Pods-PubNubPlayground/Pods-PubNubPlayground.release.xcconfig"; sourceTree = "<group>"; };
 		A9947E72350F174D5CB11360 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		B15F1CF6B248BEA5A4886073 /* Pods_PubNubPlayground.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PubNubPlayground.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B6CDBA012FF288A3DCDE60D6 /* Pods-PubNubPlayground.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PubNubPlayground.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-PubNubPlayground/Pods-PubNubPlayground.debug.xcconfig"; sourceTree = "<group>"; };
+		F549891D51B06E51ECB7CB4E /* Pods-PubNubPlayground.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PubNubPlayground.debug.xcconfig"; path = "../Pods/Target Support Files/Pods-PubNubPlayground/Pods-PubNubPlayground.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,8 +71,8 @@
 		F3745DAB9DB5D49C5FF905EE /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				A54D3CFEB51352CA94380AF6 /* Pods-PubNubPlayground.release.xcconfig */,
-				B6CDBA012FF288A3DCDE60D6 /* Pods-PubNubPlayground.debug.xcconfig */,
+				18278EB9B63E12341B84B4ED /* Pods-PubNubPlayground.release.xcconfig */,
+				F549891D51B06E51ECB7CB4E /* Pods-PubNubPlayground.debug.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -208,7 +208,7 @@
 		};
 		6A585E396EF8FF87C503F3C9 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B6CDBA012FF288A3DCDE60D6 /* Pods-PubNubPlayground.debug.xcconfig */;
+			baseConfigurationReference = F549891D51B06E51ECB7CB4E /* Pods-PubNubPlayground.debug.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
@@ -234,7 +234,7 @@
 		};
 		6C7FF4596D44133D87697680 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A54D3CFEB51352CA94380AF6 /* Pods-PubNubPlayground.release.xcconfig */;
+			baseConfigurationReference = 18278EB9B63E12341B84B4ED /* Pods-PubNubPlayground.release.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
