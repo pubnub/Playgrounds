@@ -2,6 +2,7 @@ import UIKit
 import XCPlayground
 import PlaygroundSupport
 PlaygroundPage.current.needsIndefiniteExecution = true
+//: ![PubNub Logo](PubNubLogo.png)
 /*:
  # Getting Started with Swift and PubNub
  
