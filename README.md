@@ -17,3 +17,7 @@ In order to use this Playground, you must follow these steps:
 4. Select the `PubNubPlayground` target if need be: ![Image of Selecting PubNubPlayground Target](https://raw.githubusercontent.com/pubnub/Playgrounds/assets/selecttarget.png)
 5. Build the target `PubNubPlayground` by clicking the play button next to the target in the upper left of Xcode: ![Image of Build Target Button in Xcode](https://raw.githubusercontent.com/pubnub/Playgrounds/assets/buildtarget.png)
 4. Now select `PubNub.playground` and prepare to be amazed! ![Image of PubNub.playground](https://raw.githubusercontent.com/pubnub/Playgrounds/assets/selectplayground.png)
+
+### Contributing
+
+Please feel free to submit pull requests or open issues if you experience any difficulties. For further help, please contact <support@pubnub.com>
