@@ -19,6 +19,15 @@ PlaygroundPage.current.needsIndefiniteExecution = true
  The first step to using PubNub is importing the framework:
  */
 import PubNub
+//#-hidden-code
+let viewRect = CGRect(x: 0, y: 0, width: 100 , height: 400)
+let theView = UIView(frame: viewRect)
+theView.backgroundColor = UIColor.red
+//PlaygroundPage.current.liveView = theView
+let consoleView = ConsoleView()
+PlaygroundPage.current.liveView = consoleView
+
+//#-end-hidden-code
 /*:
  In order to use PubNub features, you must create a PubNub client instance.
  In this step, replace the keys passed into the `PNConfiguration` constructor with your own respective publish and subscribe keys.
@@ -27,6 +36,14 @@ let config = PNConfiguration(publishKey: "pub-c-63c972fb-df4e-47f7-82da-e659e28f
 // at this point you can customize your `PNConfiguration` object as needed
 print("publish key: \(config.publishKey) and subscribe key: \(config.subscribeKey)")
 let exampleClient = PubNub.client(with: config)
+var frame = theView.frame
+frame.size.height -= 10
+frame.size.width -= 10
+let textView = UITextView(frame: frame)
+textView.text = "Starting\n"
+textView.isEditable = false
+
+theView.addSubview(textView)
 /*:
  Now we will create a function to encapsulate these initialization actions
  */
@@ -106,7 +123,7 @@ class PubNubPublisher: NSObject {
 }
 
 let publisher = PubNubPublisher(publishChannel: "PlaygroundChannel")
-publisher.publish(message: "Hello from the PubNub Swift SDK!")
+publisher.publish(message: "Hello from the PubNub Swift SDK!!")
 /*:
  Once a `PubNubPublisher` instance is created, the client will publish a message to 'PlaygroundChannel' and you can see in the playground and the debug console whether the message successfully went through or failed with the print statement that is executed.
 
@@ -136,6 +153,13 @@ class PubNubSubscriber: PubNubPublisher, PNObjectEventListener {
     
     // Handle new message from one of channels on which client has been subscribed.
     func client(_ client: PubNub, didReceiveMessage message: PNMessageResult) {
+        var currentText = textView.text!
+        let messageString = "\(message.data.message!)\n"
+        currentText.append(messageString)
+        textView.text = currentText
+        textView.setNeedsLayout()
+        consoleView.addMessage(message: messageString)
+        
         // Handle new message stored in message.data.message
         if message.data.subscription != nil {
             
@@ -159,11 +183,14 @@ class PubNubSubscriber: PubNubPublisher, PNObjectEventListener {
             "\(message.data.timetoken)")
         
         //Only needed when running in playground
-        PlaygroundPage.current.finishExecution()
+        //PlaygroundPage.current.finishExecution()
     }
 }
 
 let subscriber = PubNubSubscriber(publishChannel: "PlaygroundChannel")
+publisher.publish(message: "Again")
+publisher.publish(message: "jordan")
+publisher.publish(message: "alice in chains")
 /*:
  
 ---
