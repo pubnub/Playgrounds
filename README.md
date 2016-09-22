@@ -3,8 +3,8 @@ This project uses Playgrounds to show the features of the [PubNub Swift SDK](htt
 
 ## Prerequisites
 
-* OS X 10.11
-* [Xcode 7.3](https://itunes.apple.com/us/app/xcode/id497799835?mt=12)
+* macOS 10.12
+* [Xcode 8.0](https://itunes.apple.com/us/app/xcode/id497799835?mt=12)
 * [Cocoapods 1.0](https://cocoapods.org/)
 
 ## Set Up Instructions
