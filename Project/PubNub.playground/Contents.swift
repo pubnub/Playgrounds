@@ -1,6 +1,8 @@
 import UIKit
 import XCPlayground
-XCPlaygroundPage.currentPage.needsIndefiniteExecution = true
+import PlaygroundSupport
+PlaygroundPage.current.needsIndefiniteExecution = true
+//: ![PubNub Logo](PubNubLogo.png)
 /*:
  # Getting Started with Swift and PubNub
  
@@ -22,21 +24,29 @@ import PubNub
  In order to use PubNub features, you must create a PubNub client instance.
  In this step, replace the keys passed into the `PNConfiguration` constructor with your own respective publish and subscribe keys.
  */
-let config = PNConfiguration(publishKey: "pub-c-63c972fb-df4e-47f7-82da-e659e28f7cb7", subscribeKey: "sub-c-28786a2e-31a3-11e6-be83-0619f8945a4f")
-// at this point you can customize your `PNConfiguration` object as needed
+let playgroundPublishKey = "pub-c-63c972fb-df4e-47f7-82da-e659e28f7cb7"
+let playgroundSubscribeKey = "sub-c-28786a2e-31a3-11e6-be83-0619f8945a4f"
+let config = PNConfiguration(publishKey: playgroundPublishKey, subscribeKey: playgroundSubscribeKey)
+/*:
+ > **Note:**
+ This playground uses a specific set of Publish and Subscribe keys. Feel free to substitute your own keys above by using new definitions for the key constants.
+ */
+/*:
+ At this point you can customize your `PNConfiguration` object as needed
+ */
 print("publish key: \(config.publishKey) and subscribe key: \(config.subscribeKey)")
-let exampleClient = PubNub.clientWithConfiguration(config)
+let exampleClient = PubNub.client(with: config)
 /*:
  Now we will create a function to encapsulate these initialization actions
  */
-func createPubNubClientInstance(publishKey: String!, subscribeKey: String!) -> PubNub {
-    let createdConfig = PNConfiguration(publishKey: "pub-c-63c972fb-df4e-47f7-82da-e659e28f7cb7", subscribeKey: "sub-c-28786a2e-31a3-11e6-be83-0619f8945a4f")
-    return PubNub.clientWithConfiguration(createdConfig)
+func createPubNubClientInstance(publishKey: String, subscribeKey: String) -> PubNub {
+    let createdConfig = PNConfiguration(publishKey: publishKey, subscribeKey: subscribeKey)
+    return PubNub.client(with: createdConfig)
 }
 /*:
  Here is an example of `createPubNubClientInstance(publishKey:subscribeKey:)` in action:
  */
-print(createPubNubClientInstance("demo", subscribeKey: "demo"))
+print(createPubNubClientInstance(publishKey: "demo", subscribeKey: "demo"))
 /*:
  It is recommended that a single PubNub client instance is created in AppDelegate.swift. Here is an example:
  */
@@ -51,8 +61,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // now override the AppDelegate initialization to set the PubNub client instance constant
     override init() {
         // set the client instance property in phase 1 of initialization
-        let config = PNConfiguration(publishKey: "pub-c-63c972fb-df4e-47f7-82da-e659e28f7cb7", subscribeKey: "sub-c-28786a2e-31a3-11e6-be83-0619f8945a4f")
-        self.client = PubNub.clientWithConfiguration(config)
+        let config = PNConfiguration(publishKey: playgroundPublishKey, subscribeKey: playgroundSubscribeKey)
+        self.client = PubNub.client(with: config)
         // now delegate to super initialization to end phase 1 of initialization
         super.init()
         // perform any custom initialization in phase 2 (such as adding the `self` as a listener to `client`)
@@ -74,7 +84,7 @@ class PubNubPublisher: NSObject {
     
     required init(publishChannel: String) {
         // set client before the first phase of initialization ends
-        self.client = createPubNubClientInstance("pub-c-63c972fb-df4e-47f7-82da-e659e28f7cb7", subscribeKey: "sub-c-28786a2e-31a3-11e6-be83-0619f8945a4f")
+        self.client = createPubNubClientInstance(publishKey: playgroundPublishKey, subscribeKey: playgroundSubscribeKey)
         self.publishChannel = publishChannel
         super.init()
     }
@@ -85,7 +95,7 @@ class PubNubPublisher: NSObject {
             return
         }
         client.publish(publishString, toChannel: self.publishChannel) { (status) in
-            if status.error {
+            if status.isError {
                 // Error publishing message to specified channel.
                 // Handle message publish error. Check 'category' property
                 // to find out possible reason because of which request did fail.
@@ -105,7 +115,7 @@ class PubNubPublisher: NSObject {
 }
 
 let publisher = PubNubPublisher(publishChannel: "PlaygroundChannel")
-publisher.publish("Hello from the PubNub Swift SDK!")
+publisher.publish(message: "Hello from the PubNub Swift SDK!")
 /*:
  Once a `PubNubPublisher` instance is created, the client will publish a message to 'PlaygroundChannel' and you can see in the playground and the debug console whether the message successfully went through or failed with the print statement that is executed.
 
@@ -129,14 +139,14 @@ class PubNubSubscriber: PubNubPublisher, PNObjectEventListener {
     required init(publishChannel: String) {
         super.init(publishChannel: publishChannel)
         // add subscription during phase two of initialization
-        client.addListener(self)
-        client.subscribeToChannels([self.publishChannel], withPresence: false)
+        client.add(self)
+        client.subscribe(toChannels: [self.publishChannel], withPresence: false)
     }
     
     // Handle new message from one of channels on which client has been subscribed.
-    func client(client: PubNub, didReceiveMessage message: PNMessageResult) {
+    func client(_ client: PubNub, didReceiveMessage message: PNMessageResult) {
         // Handle new message stored in message.data.message
-        if message.data.actualChannel != nil {
+        if message.data.subscription != nil {
             
             // Message has been received on channel group stored in
             // message.data.subscribedChannel
@@ -154,15 +164,20 @@ class PubNubSubscriber: PubNubPublisher, PNObjectEventListener {
         }
         
         print("Received message: \(receivedMessage) on channel " +
-            "\((message.data.actualChannel ?? message.data.subscribedChannel)!) at " +
+            "\((message.data.subscription ?? message.data.channel)!) at time: " +
             "\(message.data.timetoken)")
         
         //Only needed when running in playground
-        XCPlaygroundPage.currentPage.finishExecution()
+        PlaygroundPage.current.finishExecution()
     }
 }
 
 let subscriber = PubNubSubscriber(publishChannel: "PlaygroundChannel")
+
+/*:
+ Now uncomment the line below to see a PubNub client instance receive a published message in realtime directly above
+ */
+publisher.publish(message: "I just received my first PubNub message on Swift!")
 /*:
  
 ---
