@@ -1,6 +1,8 @@
 # Playgrounds
 This project uses Playgrounds to show the features of the [PubNub Swift SDK](https://www.pubnub.com/docs/swift/pubnub-swift-sdk) with Apple's Playgrounds, such as their [Learn the Essentials of Swift Playground](https://developer.apple.com/library/ios/referencelibrary/GettingStarted/DevelopiOSAppsSwift/Lesson1.html#//apple_ref/doc/uid/TP40015214-CH3-SW1)
 
+This playground is our [first Medium engineering post](https://medium.com/pubnub-engineering/introducing-pubnub-swift-playgrounds-1283c38dd656#.alufk93vy).
+
 ## Prerequisites
 
 * macOS 10.12
